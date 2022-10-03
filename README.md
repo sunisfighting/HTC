@@ -6,6 +6,7 @@ Code for the paper "[Towards Higher-order Topological Consistency for Unsupervis
 - networkx >= 2.6.0
 
 # Running
+For orbit counting on new datasets, please refer to [ORCA](https://github.com/thocevar/orca).
 Before running, make sure that the file "graph_data" (see **Releases**) is downloaded and uncompressed.
 Then run the following codes:
 
@@ -19,3 +20,8 @@ python network_alignment.py --source_dataset graph_data/douban/online/graphsage 
 ```php
 python network_alignment.py --source_dataset graph_data/allmv_tmdb/allmv/graphsage --target_dataset graph_data/allmv_tmdb/tmdb/graphsage --groundtruth graph_data/allmv_tmdb/dictionaries/groundtruth HTC --gm
 ```
+
+# Citation
+
+Please kindly cite our work as follows:
+*Qingqiang Sun, Xuemin Lin, Ying Zhang, Wenjie Zhang, Chaoqi Chen. Towards Higher-order Topological Consistency for Unsupervised Network Alignment. arXiv preprint arXiv:2208.12463, 2022.*
