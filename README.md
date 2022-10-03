@@ -6,7 +6,7 @@ Code for the paper "[Towards Higher-order Topological Consistency for Unsupervis
 - networkx >= 2.6.0
 
 # Running
-Before running, make sure the graph_data (see **Releases**) is downloaded and uncompressed.
+Before running, make sure that the file "graph_data" (see **Releases**) is downloaded and uncompressed.
 Then run the following codes:
 
 - Douban Online & Offline
