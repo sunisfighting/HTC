@@ -53,7 +53,7 @@ def get_elements(source_dataset, target_dataset):
     Compute Adj matrix
     Preprocessing nodes attribute
     """
-    source_A = source_dataset.get_adjacency_matrix() #np
+    source_A = source_dataset.get_adjacency_matrix()
     target_A = target_dataset.get_adjacency_matrix()
 
     source_feats = source_dataset.features
@@ -178,7 +178,6 @@ def cos_sim( z1: torch.Tensor, z2: torch.Tensor):
 def CSLS(Hs, Ht, k):
     Hs_mean = torch.mean(Hs, dim = 1).reshape(-1,1)
     Ht_mean = torch.mean(Ht, dim = 1).reshape(-1,1)
-    # H_mean = (Hs_mean + Ht_mean)/2
     cos = cos_sim(Hs - Hs_mean, Ht - Ht_mean) # ~pearson
     r_s = avg_top_k(cos, k).reshape((-1, 1))
     r_t = avg_top_k(cos.T, k).reshape((1, -1))
@@ -191,33 +190,33 @@ def greedy_match(S):
         N is the number of target nodes.
     :return: A dict, map from source to list of targets.
     """
-    S = S.T   #target * source
-    m, n = S.shape   # m==n
-    x = S.T.flatten()  #source * target
+    S = S.T
+    m, n = S.shape
+    x = S.T.flatten()
     min_size = min([m, n])
     used_rows = np.zeros((m))
     used_cols = np.zeros((n))
     max_list = np.zeros((min_size))
-    row = np.zeros((min_size))  # target indexes
-    col = np.zeros((min_size))  # source indexes
+    row = np.zeros((min_size))
+    col = np.zeros((min_size))
 
-    ix = np.argsort(-x) + 1  #index从小到大对应x数值从大到小
+    ix = np.argsort(-x) + 1
 
     matched = 1
     index = 1
     while(matched <= min_size):
-        ipos = ix[index-1]  #9, 6
-        jc = int(np.ceil(ipos/m))  #3, 2
-        ic = ipos - (jc-1)*m  #3, 3
+        ipos = ix[index-1]
+        jc = int(np.ceil(ipos/m))
+        ic = ipos - (jc-1)*m
         if ic == 0 : ic = 1
         if (used_rows[ic-1] == 0 and used_cols[jc-1] == 0):
-            row[matched-1] = ic - 1    #row[0] = 2, row[1] = 2
-            col[matched-1] = jc - 1    #col[0] = 2, col[1] = 1
-            max_list[matched-1] = x[index-1]  #max_list[0] = x[0], matched_list[1] = x[1]
-            used_rows[ic-1] = 1   #used_rows[2] = 1, used_rows[2] = 1
-            used_cols[jc-1] = 1   #used_cols[2] = 1, used_cols[1] =1
-            matched += 1   #matched = 2, 3
-        index += 1   #index = 2, 3
+            row[matched-1] = ic - 1
+            col[matched-1] = jc - 1
+            max_list[matched-1] = x[index-1]
+            used_rows[ic-1] = 1
+            used_cols[jc-1] = 1
+            matched += 1
+        index += 1
 
     result = np.zeros(S.T.shape)
     for i in range(len(row)):

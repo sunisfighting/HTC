@@ -31,21 +31,17 @@ class HTC(NetworkAlignmentModel):
         self.src_feat = self.src_feat.to(self.device)
         self.trg_feat = self.trg_feat.to(self.device)
         if self.args.first_run:
-            begin = time.time()
             src_goms = orca2gom(self.args.source_dataset, self.src_A)
             self.src_laps = torch.Tensor(gom2lap(src_goms)).to(self.device)
             trg_goms = orca2gom(self.args.target_dataset, self.trg_A)
             self.trg_laps = torch.Tensor(gom2lap(trg_goms)).to(self.device)
-            self.time_laps = time.time()-begin
             torch.save(self.src_laps, args.source_dataset + '/src_laps.pt')
             torch.save(self.trg_laps, args.target_dataset + '/trg_laps.pt')
         else:
             print('loading orbit_laplacian matrices...')
-            begin = time.time()
             self.src_laps = torch.load(args.source_dataset + '/src_laps.pt').to(self.device)
             self.trg_laps = torch.load(args.target_dataset + '/trg_laps.pt').to(self.device)
-            self.time_laps = time.time() - begin
-            # print('time for loading laps: %.2f' % (time.time() - begin))
+
         print('the shape of laps: ', self.src_laps.shape)
         self.num_node_s = self.src_feat.shape[0]
         self.num_node_t = self.trg_feat.shape[0]
@@ -58,20 +54,18 @@ class HTC(NetworkAlignmentModel):
         self.ftune_epoch = args.num_ftune
         self.ftune_lr = args.flr
         self.ftune_alpha = args.alpha
-        self.k = args.k #200
+        self.k = args.k
 
     def align(self):
 
         myNet = MyNet(self.num_node_s, self.num_node_t, self.num_feat, self.num_hid1, self.num_hid2, self.args.p).to(self.device)
-        t_begin = time.time()
+
         myNet = self.unsupervised_train(myNet)
-        t_utrn = time.time()
+
         myNet, count_max = self.trusted_refine(myNet)
-        t_refine = time.time()
+
         S_MyAlign = self.weighted_integration(myNet, count_max)
-        t_integ = time.time()
-        print('laps establishing: %.2fs, unsupervised_training: %.2fs, refinement: %.2fs, integration: %.2fs'\
-              % (self.time_laps, t_utrn-t_begin, t_refine-t_utrn, t_integ-t_refine))
+
         return S_MyAlign
 
     def unsupervised_train(self, myNet):
