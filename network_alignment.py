@@ -316,10 +316,3 @@ if __name__ == '__main__':
         print("-"*100)
         print('Running time: {}'.format(time()-start_time))
 
-"""
-# Douban
-python network_alignment.py --source_dataset graph_data/douban/online/graphsage --target_dataset graph_data/douban/offline/graphsage --groundtruth graph_data/douban/dictionaries/groundtruth HTC --k 20 --p 0.5 --ulr 0.01 --alpha 1.1
-
-# allmovie_imdb
-python network_alignment.py --source_dataset graph_data/allmv_tmdb/allmv/graphsage --target_dataset graph_data/allmv_tmdb/tmdb/graphsage --groundtruth graph_data/allmv_tmdb/dictionaries/groundtruth HTC --gm
-"""
