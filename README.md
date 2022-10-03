@@ -1,5 +1,5 @@
 # HTC
-Code for the paper "[Towards Higher-order Topological Consistency for Unsupervised Network Alignment](https://arxiv.org/pdf/2208.12463.pdf)".
+Code for the paper "[Towards Higher-order Topological Consistency for Unsupervised Network Alignment](https://arxiv.org/pdf/2208.12463.pdf)", accepted by ICDE 2023.
 
 # Environment
 - pytorch >= 1.11.0
