@@ -100,21 +100,21 @@ def orca2gom(data_path, adj):
     orbit_counts = np.loadtxt(orca_dir)
     num_node = adj.shape[0]
     goms = []
-    goms.append(coo_matrix(adj))    # orbit 0 就是本来的adj
-    for k in range(orbit_counts.shape[1]):  #每个orbit
+    goms.append(coo_matrix(adj))
+    for k in range(orbit_counts.shape[1]):
         row = np.concatenate((edge[:,0], edge[:,1]))
         col = np.concatenate((edge[:,1], edge[:,0]))
         val = np.concatenate((orbit_counts[:,k], orbit_counts[:,k]))
-        sp_matrix = coo_matrix((val, (row, col)), shape=(adj.shape[0], adj.shape[1])) # 对称稀疏矩阵
+        sp_matrix = coo_matrix((val, (row, col)), shape=(adj.shape[0], adj.shape[1]))
         goms.append(sp_matrix)
     return goms
 
 def gom2lap(goms):
     laps = []
     for i in range(len(goms)):
-        gom = goms[i].todense() #稀疏转稠密
+        gom = goms[i].todense()
         diag = np.clip(gom.max(axis=1), a_min = 1, a_max= None)
-        np.fill_diagonal(gom, diag)  #对角元素填充
+        np.fill_diagonal(gom, diag)
         D_normed = np.diag(np.array(gom.sum(axis= 1)).reshape(-1)**-0.5)
         lap = D_normed.dot(gom).dot(D_normed)
         laps.append(lap)
