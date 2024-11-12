@@ -25,4 +25,4 @@ python network_alignment.py --source_dataset graph_data/allmv_tmdb/allmv/graphsa
 
 Please kindly cite our work as follows:
 
-*Qingqiang Sun, Xuemin Lin, Ying Zhang, Wenjie Zhang, Chaoqi Chen. Towards Higher-order Topological Consistency for Unsupervised Network Alignment. arXiv preprint arXiv:2208.12463, 2022.*
+*Q. Sun, X. Lin, Y. Zhang, W. Zhang and C. Chen, "Towards Higher-order Topological Consistency for Unsupervised Network Alignment," 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 177-190, doi: 10.1109/ICDE55515.2023.00021.*
